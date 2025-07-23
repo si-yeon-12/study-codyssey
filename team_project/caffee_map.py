@@ -24,6 +24,7 @@ def load_analyze_csv():
     
     # 합쳐진 파일에서 area 와 x, y 칼럼 기준 오름차순으로 값들을 정렬한다.
     area_combined = area_combined.sort_values(by=['area', 'x', 'y'], ascending=True)
+    area_combined.to_csv('team_project/area_combined.csv', index=None)
 
     # 합쳐진 파일에서 area가 1인 값들만 모아 area_combined_one 파일을 만들고 csv 파일로 저장한다.
     area_combined_one = area_combined[area_combined['area']==1]
