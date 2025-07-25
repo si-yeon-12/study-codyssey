@@ -1,11 +1,3 @@
-''' 
-flask : 앱 프레임워크
-request : 클라이언트(웹 브라우저)의 요청 정보를 담고 있는 객체
-render_template : HTML 템플릿 파일을 화면에 그려주느느 함수
-gTTS : Google Text To Speech 라이브러리
-BytesIO : 오디오 데이터를 파일로 저장하지 않고 메모리에서 직접 다루기 위해 사용
-base64 : 바이너리 데이터를 텍스트(ASCII) 형태로 변환하기 위해 사용
-'''
 from flask import Flask, request, Response, render_template
 import os
 from io import BytesIO
@@ -34,7 +26,6 @@ def tts_service():
                 
                 # 음성 데이터를 저장할 메모리 버퍼(임시 저장 공간) 생성
                 fp = BytesIO()
-                # 생성된 음성 데이터를 메모리 버퍼에 덮어쓰기
                 tts.write_to_fp(fp)
                 # 버퍼의 커서(읽기 시작 위치)를 맨 앞으로 이동
                 fp.seek(0)
