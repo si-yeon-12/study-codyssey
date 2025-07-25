@@ -6,8 +6,7 @@ def multiply(a, b):
     return a*b
 def divide(a, b):
     if b == 0:
-        print("Error: Division by zero.")
-        return None
+        raise ZeroDivisionError
     return a/b
 
 def mul_div(lst):
@@ -45,8 +44,7 @@ def add_sub(lst):
         elif operator == '-':
             final_result = subtract(final_result, next_num)
         else:
-            print("Invalid input.")
-            return None
+            raise
         j += 2
     
     return final_result
@@ -55,10 +53,9 @@ def main():
     calcul_input = input("Input: ")
 
     try:
-        calcul = calcul_input.strip().split()
+        calcul = calcul_input.split()
         if not calcul:
-            print("Invalid input.")
-            return
+            raise
         
         calcul_list = []
         for i in calcul:
@@ -66,14 +63,18 @@ def main():
                 calcul_list.append(float(i))
             except:
                 calcul_list.append(i)
+
+        temp_list = mul_div(calcul_list)
+        final_result = add_sub(temp_list)
+
+        print("Result: ", final_result)
+
+    except ZeroDivisionError:
+        print("Error: Division by zero.")
+        return None
     except:
         print("Invalid input.")
-        return
-    
-    temp_list = mul_div(calcul_list)
-    final_result = add_sub(temp_list)
-
-    print("Result: ", final_result)
+        return None
 
 if __name__ == "__main__":
     main()
