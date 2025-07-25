@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template, jsonify
 import os
 from io import BytesIO
 from gtts import gTTS
@@ -7,8 +7,11 @@ DEFAULT_LANG = os.getenv('DEFAULT_LANG', 'ko')
 app = Flask(__name__)
 
 @app.route("/")
-def home():
+def get_html():
+    return render_template('index.html')
 
+@app.route("/")
+def home():
     text = "Hello, DevOps"
 
     lang = request.args.get('lang', DEFAULT_LANG)
