@@ -12,37 +12,24 @@ from io import BytesIO
 from gtts import gTTS
 import base64
 
-# 기본 언어를 한국어로 설정, flask 경로를 __name__이라는 모듈로 설정
 DEFAULT_LANG = os.getenv('DEFAULT_LANG', 'ko')
 app = Flask(__name__)
 
-# '/' 주소에 대한 요청을 처리하는 함수 정의
-# 함수가 GET과 POST 두 가지 방식의 요청을 모두 처리
 @app.route('/', methods=['GET', 'POST'])
 def tts_service():
-    """
-    메인 페이지를 렌더링하고 TTS 변환 요청을 처리
-    - GET 요청: 사용자가 텍스트를 입력하고 언어를 선택할 수 있는 폼 제공
-    - POST 요청: 입력된 텍스트와 선택된 언어를 받아 음성으로 변환
-                변환된 음성을 재생할 수 있는 페이지를 다시 렌더링
-    """
-    audio_b64 = None      # 음성 데이터(base64 인코딩)를 저장할 변수
-    error_message = None  # 오류 메시지를 저장할 변수
-    user_text = ""        # 사용자가 입력한 텍스트를 저장할 변수
-    selected_lang = "ko"  # 사용자가 선택한 언어를 저장할 변수 (기본값 'ko')
+    audio_b64 = None     
+    error_message = None 
+    user_text = ""        
+    selected_lang = "ko"  
 
-    # 만약 요청 방식이 'POST'라면 (즉, 사용자가 '음성 듣기' 버튼을 눌렀다면)
     if request.method == 'POST':
         try:
-            # HTML 폼(form)에서 'input_text'와 'lang' 이름으로 전송된 데이터 변수에 저장
             user_text = request.form.get('input_text')
             selected_lang = request.form.get('lang')
 
-            # strip()으로 앞뒤 공백을 제거했을 때 내용이 없으면 오류 메시지를 설정
             if not user_text.strip():
                 error_message = "음성으로 변환할 텍스트를 입력해주세요."
             else:
-                # gTTS 라이브러리를 사용해 텍스트를 음성으로 변환
                 tts = gTTS(text=user_text, lang=selected_lang)
                 
                 # 음성 데이터를 저장할 메모리 버퍼(임시 저장 공간) 생성
